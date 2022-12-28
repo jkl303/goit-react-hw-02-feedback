@@ -15,18 +15,17 @@ export class App extends Component {
         const name = e.target.name;
         if(name === "good") {
         this.setState((prevState) => ({ good : prevState.good +1,
-        
+  
         }))
-        }
+      }
+      
         if(name === "neutral") {
         this.setState((prevState) => ({ neutral : prevState.neutral +1,
-        
         }))
         }
 
         if(name === "bad") {
         this.setState((prevState) => ({ bad : prevState.bad +1,
-        
         }))
         }
 
@@ -43,13 +42,16 @@ export class App extends Component {
     }
   render() {
     const { good, neutral, bad } = this.state;
-    const options = ["good", "neutral", "bad"]
+    const options = ["good", "neutral", "bad"];
+    const total = this.countTotalFeedback(good, neutral, bad);
+    const positivePercentage = this.countPositiveFeedbackPercentage(good, neutral, bad);
+    
     return (<>
     
     <Section title="Please leave your feedback"><FeedbackOptions options={options} onLeaveFeedback={this.update}></FeedbackOptions>
     </Section>
       <Section title="Statistics">
-        {good+neutral+bad > 0 ? <Statistics good={good} neutral={neutral} bad={bad} total={this.countTotalFeedback(good, neutral, bad)} positivePercentage={this.countPositiveFeedbackPercentage(good, neutral, bad)}></Statistics> : <Notification message="There is no feedback"></Notification>}
+        {good+neutral+bad > 0 ? <Statistics good={good} neutral={neutral} bad={bad} total={total} positivePercentage={positivePercentage}></Statistics> : <Notification message="There is no feedback"></Notification>}
     </Section>
     </>)
   }
